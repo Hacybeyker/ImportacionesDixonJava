@@ -1,0 +1,170 @@
+create database importacionesdixon
+go
+
+use importacionesdixon
+;
+
+create table categoria
+(
+codigocategoria serial not null,
+nombrecategoria varchar(100) null default '',
+descripcioncategoria varchar(500) null default '',
+activocategoria boolean null default true,
+principalcategoria boolean null default false,
+constraint codigocategoria_pk primary key(codigocategoria)
+)
+;
+
+insert into categoria(nombrecategoria,principalcategoria) values ('Moda hombre',true),('Moda mujer',true),('Informatica',true),('Electronica',true)
+;
+/*select * from categoria
+for json path, root('categorias')
+*/
+
+create table subcategoria
+(
+codigosubcategoria serial not null,
+codigocategoria int not null,
+nombresubcategoria varchar(100) null default '',
+descripcionsubcategoria varchar(500) null default '',
+activosubcategoria boolean null default true,
+principalsubcategoria boolean null default false,
+constraint codigosubcategoria_pk primary key(codigosubcategoria),
+constraint codigocategoriasubcategoria_fk foreign key(codigocategoria) references categoria (codigocategoria)
+)
+;
+
+insert into subcategoria(codigocategoria,nombresubcategoria,principalsubcategoria) 
+values (1,'Ropa de hombre',true),(1,'Complementos',true),(1,'Estilo casual',true),
+	(2,'Estilo veraniego',true),(2,'Moda femenina',true),(2,'Bodas y eventos',true),
+	(3,'Tablets',true),(3,'Almacenamiento',true),(3,'Redes',true),(3,'Accesorios para portatil',true),
+	(4,'Componentes y accesorios',true),(4,'Fotografia',true),(4,'Eletronica inteligente',true),(4,'Gamming',true)
+;
+/*
+select codigosubcategoria,nombresubcategoria,descripcionsubcategoria,activosubcategoria,principalsubcategoria from subcategoria sc inner join categoria c on sc.codigocategoria=c.codigocategoria where c.codigocategoria = 1
+for json path, root('subcategoria')
+*/
+
+create table lineasubcategoria
+(
+codigolineasubcategoria serial not null,
+codigosubcategoria int not null,
+nombrelineasubcategoria varchar(100) null default '',
+descripcionlineasubcategoria varchar(500) null default '',
+activolineasubcategoria boolean null default true,
+principallineasubcategoria boolean null default false,
+constraint codigolineasubcategoria_pk primary key (codigolineasubcategoria),
+constraint codigosubcategorialineasubcategoria_fk foreign key(codigosubcategoria) references subcategoria(codigosubcategoria)
+)
+;
+
+insert into lineasubcategoria(codigosubcategoria,nombrelineasubcategoria,principallineasubcategoria)
+values
+(1,'Polos',true),(1,'Camisetas',true),(1,'Chaquetas',true),(1,'Calcetines',true),(1,'Camisas',true),(1,'Sudaderas',true),(1,'Bañadores',true),(1,'Ropa interior',true),(1,'Ropa de marca',true),(1,'Gym',true),(1,'Shrots',true),(1,'Pantalones',true),
+(2,'Gafas de sol',true),(2,'Gorras',true),(2,'Pañuelos',true),(2,'Corbatas',true),(2,'Bandanas',true),(2,'Guantes',true),(2,'Sombreros',true),(2,'Lentes opticos',true),(2,'Pajaritas',true),
+(3,'Vaqueros',true),(3,'Camisetas casuales',true),(3,'Camisetas vaqueras',true),(3,'Chaquetas vaqueras',true),(3,'Bermudas',true),(3,'Bufandas',true),(3,'Bañadores ajustados',true),(3,'Camisetas estampadas',true),(3,'Camisas de lino',true),(3,'Pantalones piratas',true),
+(4,'Vestidos estampados',true),(4,'Vestidos de playa',true),(4,'Vestidos casuales',true),(4,'Vestidos ajustados',true),(4,'Vestidos flare',true),(4,'Bañadores',true),
+(5,'Chaquetas',true),(5,'Chaquetas',true),(5,'Blusas y camisas',true),(5,'Lenceria',true),(5,'Sudaderas',true),
+(6,'Vestidos de novia',true),(6,'vestidos de dama de honor',true),(6,'Vestidos de noche',true),(6,'Vestidos de gala',true),
+(7,'Octa Core',true),(7,'Quad Core',true),(7,'Dual Core',true),(7,'Pantalla de 7"',true),
+(8,'Memorias Usb',true),(8,'Tarjetas de memoria',true),(8,'Disco duros externos',true),(8,'Carcasas HDD',true),(8,'SSD',true),
+(9,'Routers inalambricos',true),(9,'Modems 3G',true),(9,'Herramientas de Red',true)
+;
+/*
+select * from lineasubcategoria
+*/
+
+
+create table producto
+(
+codigoproducto serial not null,
+codigolineasubcategoria int not null,
+nombreproducto varchar(1000) null default '',
+descripcionproducto varchar(500) null default '',
+nuevoproducto boolean null default true,--al crear un nuevo producto por defecto sera nuevo
+ofertaproducto boolean null default false,--al crear un producto por defecto no tendra oferta
+porcentajeofertaproducto int null default 0,
+detalleproducto varchar(500) null default '',
+precioproducto numeric(9,2) null default 0.0,
+activoproducto boolean null default true,
+principalproducto boolean null default false,
+constraint codigoproducto_pk primary key(codigoproducto),
+constraint codigolineasubcategoriaproducto_fk foreign key(codigolineasubcategoria) references lineasubcategoria(codigolineasubcategoria)
+)
+;
+
+
+
+insert into producto(codigolineasubcategoria,nombreproducto,nuevoproducto,ofertaproducto,porcentajeofertaproducto,precioproducto,principalproducto)
+values
+(1,'Nuevo 2016 del verano del estilo clásico Polo de manga corta para Homme Casual para hombre Polo Solid camisa marcas Logo de calidad superior del algodón más el tamaño',true,true,50,23.00,true),
+(1,'Ropa de marca camisa de Polo Solid Casual Polo Homme para hombre t-shirts Tops de la alta calidad del algodón del ajustado 102TCG Accpet encargo',true,false,0,11.50,true),
+(1,'2016 top moda de Nueva hombres de la Marca Polo Camisas Estilo Polo de Manga Corta de Verano Camisa Solid Camisetas Deportivas de Golf Tenis blusa',true,true,5,10.84,true),
+(1,'Verano nuevos 2016 POLO marca Air Force One bordado hombres Aeronautica Militare hombres camisetas moda Diamond tiburón ropa',true,false,0,16.79,true),
+(1,'Marca las 2016 para hombre Polo de manga corta para Poloshirt Solid hombres Polo Homme para hombre delgado Camisas de vestir con capucha Camisa de Polo Camisa XXXL',true,false,10,9.79,true),
+(2,'Verano Hombre camisetas 2016 de La Nueva Manera Remata camisetas Con Capucha Camiseta de Manga corta de Ropa Casual Para Hombre Camisetas hombre camisetas',true,true,10,10.79,true)
+;
+
+
+create table imagen
+(
+codigoimagen serial not null,
+codigoproducto int not null,
+nombreimagen varchar(50) null default '',
+descripcionimagen varchar(50) null default '',
+imagenimagen varchar(500) null default '',
+activoimagen boolean null default true,
+principalimagen boolean null default false,
+fechacreacion date not null default now(),
+constraint codigoimagen_pk primary key (codigoimagen),
+constraint codigoproductoimagen_fk foreign key(codigoproducto) references producto(codigoproducto)
+)
+;
+insert into imagen(codigoproducto,nombreimagen,imagenimagen,activoimagen,principalimagen)
+values 
+(1,'polo1','http://polospublicitarioslicha.com/wp-content/uploads/2010/01/polobox4.jpg',true,true),
+(2,'polo2','http://www.ymaindustrial.com/images/ropa/Polos%20y%20Jeans/ppj4.jpg',true,true),
+(3,'polo3','http://polospublicitarioslicha.com/wp-content/uploads/2010/01/polobox1.jpg',true,true)
+;
+
+create table contacto
+(
+codigocontacto serial not null,
+nombrecontacto varchar(50) null default '',
+apellidocontacto varchar(50) null default '',
+empresacontacto varchar(50) null default '',
+telefonocontacto varchar(50) null default '',
+correocontacto varchar(50) null default '',
+mensajecontacto varchar(50) null default '',
+fechacreacion date not null default now(),
+constraint codigocontacto_pk primary key(codigocontacto)
+)
+;
+
+create table empresa
+(
+codigoempresa serial not null,
+nombreempresa varchar(80) null default '',
+razonsocialempresa varchar(80) null default '',
+nombrecomercialempresa varchar(80) null default '',
+direccionprincipalempresa varchar(80) null default '',
+direccionsegundaempresa varchar(80) null default '',
+direccionterceraempresa varchar(80) null default '',
+direccioncuartaempresa varchar(80) null default '',
+numerotelefonicoempresa varchar(20) null default '',
+correoempresa varchar(40) null default '',
+mapaxempresa varchar(80) null default '',
+mapayempresa varchar(80) null default '',
+piepaginaempresa varchar(80) null default '',
+derechosreservadosempresa varchar(150) null default '',
+quienessomosempresa varchar(500) null default '', 
+quienessomosrelevanteempresa varchar(250) default '',
+misionempresa varchar(500) null default '',
+visionempresa varchar(500) null default '',
+politicaempresa varchar(500) null default '',
+imagenempresa varchar(500) null default '',
+constraint codigoempresa_pk primary key(codigoempresa)
+)
+;
+
+

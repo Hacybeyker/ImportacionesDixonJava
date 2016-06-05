@@ -1,0 +1,21 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<div class="container">
+    <div class="col-md-12">
+        <div id="main-slider">
+            <div class="item">
+                <img src="librerias/img/main-slider1.jpg" alt="" class="img-responsive">
+            </div>
+            <div class="item">
+                <img class="img-responsive" src="librerias/img/main-slider2.jpg" alt="">
+            </div>
+            <div class="item">
+                <img class="img-responsive" src="librerias/img/main-slider3.jpg" alt="">
+            </div>
+            <div class="item">
+                <img class="img-responsive" src="librerias/img/main-slider4.jpg" alt="">
+            </div>
+        </div>
+        <!-- /#main-slider -->
+    </div>
+</div>

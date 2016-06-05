@@ -1,0 +1,12 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+    <!-- *** SCRIPTS TO INCLUDE ***
+ _________________________________________________________ -->
+    <script src="librerias/js/jquery-1.11.0.min.js"></script>
+    <script src="librerias/js/bootstrap.min.js"></script>
+    <script src="librerias/js/jquery.cookie.js"></script>
+    <script src="librerias/js/waypoints.min.js"></script>
+    <script src="librerias/js/modernizr.js"></script>
+    <script src="librerias/js/bootstrap-hover-dropdown.js"></script>
+    <script src="librerias/js/owl.carousel.min.js"></script>
+    <script src="librerias/js/front.js"></script>

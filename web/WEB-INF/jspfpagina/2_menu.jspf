@@ -30,7 +30,7 @@
                                 for(LineaSubCategoria lineaSubCategoria : subCategoria.getLineaSubCategorias()){
                             %>
                             <ul>
-                                <li><a href="GestionarCategoria"><%= lineaSubCategoria.getNombre() %></a></li>
+                                <li><a href="GestionarProducto?codigo=<%= lineaSubCategoria.getCodigo() %>"><%= lineaSubCategoria.getNombre() %></a></li>
                             </ul>
                             <%
                                 }

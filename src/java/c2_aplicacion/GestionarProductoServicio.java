@@ -10,6 +10,7 @@ import c3_dominio.entidad.Producto;
 import c4_persistencia.GestorJDBC;
 import c4_persistencia.postgresql.ConexionPostgreSql;
 import c4_persistencia.postgresql.ProductoDAOPostgreSql;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +58,15 @@ public class GestionarProductoServicio {
 
     
     public Producto buscarPorCodigo(int codigo) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Producto producto = new Producto();
+        try {
+            gestorODBC.abrirConexion();
+            producto = productoDAO.buscarPorCodigo(codigo);
+            gestorODBC.cerrarConexion();
+        } catch (Exception e) {            
+            gestorODBC.cerrarConexion();
+        }
+        return producto;
     }
 
     
@@ -67,7 +76,15 @@ public class GestionarProductoServicio {
 
     
     public List<Producto> buscarPorCodigoLineSubCategoria(int codigo) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Producto> productos = new ArrayList<>();
+        try {
+            gestorODBC.abrirConexion();
+            productos = productoDAO.buscarPorCodigoLineSubCategoria(codigo);
+            gestorODBC.cerrarConexion();
+        } catch (Exception e) {            
+            gestorODBC.cerrarConexion();
+        }
+        return productos;
     }
     
 }

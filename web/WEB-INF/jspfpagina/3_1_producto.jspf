@@ -22,22 +22,22 @@
                                     <div class="flip-container">
                                         <div class="flipper">
                                             <div class="front">
-                                                <a href="detail.html">
+                                                <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>">
                                                     <img src="<%= imagen.getImagen() %>" alt="" class="img-responsive">
                                                 </a>
                                             </div>
                                             <div class="back">
-                                                <a href="detail.html">
+                                                <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>">
                                                     <img src="<%= imagen.getImagen() %>" alt="" class="img-responsive">
                                                 </a>
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="detail.html" class="invisible">
+                                    <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>" class="invisible">
                                         <img src="<%= imagen.getImagen() %>" alt="" width="450" height="600" class="img-responsive">
                                     </a>
                                     <div class="text">
-                                        <h3><a href="detail.html"><%= producto.getNombre() %></a></h3>
+                                        <h3><a href="DetalleProducto?codigo=<%= producto.getCodigo() %>"><%= producto.getNombre() %></a></h3>
                                         <p class="price"><del>S/.<%= String.format("%.2f", producto.getPrecio())%> </del> S/.<%= String.format("%.2f",producto.calcularNuevoPrecio()) %></p>
                                     </div>
                                     <!-- /.text -->
@@ -76,22 +76,22 @@
                                         <div class="flip-container">
                                             <div class="flipper">
                                                 <div class="front">
-                                                    <a href="detail.html">
+                                                    <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>">
                                                         <img src="<%= imagen.getImagen() %>" alt="" class="img-responsive">
                                                     </a>
                                                 </div>
                                                 <div class="back">
-                                                    <a href="detail.html">
+                                                    <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>">
                                                         <img src="<%= imagen.getImagen() %>" alt="" class="img-responsive">
                                                     </a>
                                                 </div>
                                             </div>
                                         </div>
-                                        <a href="detail.html" class="invisible">
+                                        <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>" class="invisible">
                                             <img src="<%= imagen.getImagen() %>" alt="" class="img-responsive">
                                         </a>
                                         <div class="text">
-                                            <h3><a href="detail.html"><%= producto.getNombre() %></a></h3>
+                                            <h3><a href="DetalleProducto?codigo=<%= producto.getCodigo() %>"><%= producto.getNombre() %></a></h3>
                                             <p class="price">S/.<%=String.format("%.2f", producto.getPrecio())   %></p>
                                         </div>
                                         <div class="ribbon sale">
@@ -115,23 +115,23 @@
                                             <div class="flip-container">
                                                 <div class="flipper">
                                                     <div class="front">
-                                                        <a href="detail.html">
+                                                        <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>">
                                                             <img src="<%= imagen.getImagen() %>" alt="" class="img-responsive">
                                                         </a>
                                                     </div>
                                                     <div class="back">
-                                                        <a href="detail.html">
+                                                        <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>">
                                                             <img src="<%= imagen.getImagen() %>" alt="" class="img-responsive">
                                                         </a>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <a href="detail.html" class="invisible">
+                                            <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>" class="invisible">
                                                 <img src="<%= imagen.getImagen() %>" alt="" class="img-responsive">
                                             </a>
                                             
                                             <div class="text">
-                                                <h3><a href="detail.html"><%= producto.getNombre() %></a></h3>
+                                                <h3><a href="DetalleProducto?codigo=<%= producto.getCodigo() %>"><%= producto.getNombre() %></a></h3>
                                                 <p class="price"><del>S/.<%= String.format("%.2f", producto.getPrecio())%> </del> S/.<%= String.format("%.2f",producto.calcularNuevoPrecio()) %></p>
                                             </div>
                                             <!-- /.text -->

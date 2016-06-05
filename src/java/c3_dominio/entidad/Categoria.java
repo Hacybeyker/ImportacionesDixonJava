@@ -100,6 +100,14 @@ public class Categoria {
         }
     }
     
+    public int obtenerCantidadLineaSubCategoria(){
+        int contador = 0;
+        for (SubCategoria subCategoria : subCategorias) {
+            contador+=subCategoria.getLineaSubCategorias().size();
+        }
+        return contador;
+    }
+    
     
     
     

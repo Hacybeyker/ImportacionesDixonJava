@@ -73,7 +73,31 @@ public class ProductoDAOPostgreSql implements IProductoDAO {
 
     @Override
     public Producto buscarPorCodigo(int codigo) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Producto producto = new Producto();
+        try {
+            String consulta = "select codigoproducto, nombreproducto, descripcionproducto, nuevoproducto, ofertaproducto, porcentajeofertaproducto, detalleproducto, precioproducto, activoproducto, principalproducto from Producto where codigoproducto = " + codigo;
+            ResultSet resultado = gestorODBC.ejecutarConsulta(consulta);
+            if(resultado.next()){
+                producto.setCodigo(resultado.getInt(1));
+                producto.setNombre(resultado.getString(2));
+                producto.setDescripcion(resultado.getString(3));
+                producto.setNuevo(resultado.getBoolean(4));
+                producto.setOferta(resultado.getBoolean(5));
+                producto.setPorcentajeoferta(resultado.getInt(6));
+                producto.setDetalles(resultado.getString(7));
+                producto.setPrecio(resultado.getDouble(8));
+                producto.setActivo(resultado.getBoolean(9));
+                producto.setPrincipal(resultado.getBoolean(10));
+                ImagenDAOPostgreSql imagenDAOPostgreSql = new ImagenDAOPostgreSql(gestorODBC);
+                List<Imagen> imagenes = imagenDAOPostgreSql.buscarPorCodigoProducto(producto.getCodigo());
+                for (Imagen imagen : imagenes) {
+                    producto.agregarImagen(imagen);
+                }                
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return producto;
     }
 
     @Override
@@ -83,7 +107,33 @@ public class ProductoDAOPostgreSql implements IProductoDAO {
 
     @Override
     public List<Producto> buscarPorCodigoLineSubCategoria(int codigo) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Producto> productos = new ArrayList<>();
+        try {
+            String consulta = "select codigoproducto, nombreproducto, descripcionproducto, nuevoproducto, ofertaproducto, porcentajeofertaproducto, detalleproducto, precioproducto, activoproducto, principalproducto from Producto p inner join lineasubcategoria lsc on p.codigolineasubcategoria = lsc.codigolineasubcategoria where lsc.codigolineasubcategoria = " + codigo;
+            ResultSet resultado = gestorODBC.ejecutarConsulta(consulta);
+            while(resultado.next()){
+                Producto producto = new Producto();
+                producto.setCodigo(resultado.getInt(1));
+                producto.setNombre(resultado.getString(2));
+                producto.setDescripcion(resultado.getString(3));
+                producto.setNuevo(resultado.getBoolean(4));
+                producto.setOferta(resultado.getBoolean(5));
+                producto.setPorcentajeoferta(resultado.getInt(6));
+                producto.setDetalles(resultado.getString(7));
+                producto.setPrecio(resultado.getDouble(8));
+                producto.setActivo(resultado.getBoolean(9));
+                producto.setPrincipal(resultado.getBoolean(10));
+                ImagenDAOPostgreSql imagenDAOPostgreSql = new ImagenDAOPostgreSql(gestorODBC);
+                List<Imagen> imagenes = imagenDAOPostgreSql.buscarPorCodigoProducto(producto.getCodigo());
+                for (Imagen imagen : imagenes) {
+                    producto.agregarImagen(imagen);
+                }
+                productos.add(producto);
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return productos;        
     }
     
 }

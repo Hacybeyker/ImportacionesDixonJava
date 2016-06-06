@@ -224,7 +224,7 @@
                 <div class="box">
                     <div class="container">
                         <div class="col-md-12">
-                            <h2>Hot this week</h2>
+                            <h2>NUEVOS PRODUCTOS</h2>
                         </div>
                     </div>
                 </div>

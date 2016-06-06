@@ -4,6 +4,7 @@
     Author     : Carlos Alfredo Osorio Perez <hacybeyker@hotmail.com>
 --%>
 
+<%@page import="c2_aplicacion.GestionarProductoServicio"%>
 <%@page import="c3_dominio.entidad.Imagen"%>
 <%@page import="c3_dominio.entidad.Producto"%>
 <%@page import="c3_dominio.entidad.Categoria"%>
@@ -34,7 +35,9 @@
 
 
 </head>
-
+<%
+    Producto producto = (Producto)request.getAttribute("producto");
+%>
 <body>
     <!-- *** TOPBAR ***
  _________________________________________________________ -->
@@ -170,7 +173,6 @@
 
         <div id="content">
             <div class="container">
-
                 <div class="col-md-12">
                     <ul class="breadcrumb">
                         <li><a href="#">Home</a>
@@ -181,9 +183,7 @@
                         </li>
                         <li>White Blouse Armani</li>
                     </ul>
-
                 </div>
-
                 <div class="col-md-3">
                     <!-- *** MENUS AND FILTERS ***
  _________________________________________________________ -->
@@ -238,41 +238,93 @@
                 <div class="col-md-9">
 
                     <div class="row" id="productMain">
-                        <%
-                            Producto producto = (Producto)request.getAttribute("producto");
+                        <%                            
                             if(producto.isActivo()){
+                                if(producto.isNuevo() && producto.isOferta()){
                         %>
-                        <div class="col-sm-6">
-                            <div id="mainImage">
-                                <img src="img/detailbig1.jpg" alt="" class="img-responsive">
-                            </div>
+                                <div class="col-sm-6">
+                                    <div id="mainImage">
+                                        <img src="img/detailbig1.jpg" alt="" class="img-responsive">
+                                    </div>
 
-                            <div class="ribbon sale">
-                                <div class="theribbon">SALE</div>
-                                <div class="ribbon-background"></div>
-                            </div>
-                            <!-- /.ribbon -->
+                                    <div class="ribbon sale">
+                                        <div class="theribbon"><b>-</b><%= producto.getPorcentajeoferta() %>%</div>
+                                        <div class="ribbon-background"></div>
+                                    </div>
+                                    <!-- /.ribbon -->
 
-                            <div class="ribbon new">
-                                <div class="theribbon">NEW</div>
-                                <div class="ribbon-background"></div>
-                            </div>
-                            <!-- /.ribbon -->
+                                    <div class="ribbon new">
+                                        <div class="theribbon">NEW</div>
+                                        <div class="ribbon-background"></div>
+                                    </div>
+                                    <!-- /.ribbon -->
 
-                        </div>
+                                </div>
+                        <%
+                                }else{
+                                    if(producto.isNuevo()){
+                        %>
+                                    <div class="col-sm-6">
+                                        <div id="mainImage">
+                                            <img src="img/detailbig1.jpg" alt="" class="img-responsive">
+                                        </div>
+                                        
+                                        <div class="ribbon new">
+                                            <div class="theribbon">NEW</div>
+                                            <div class="ribbon-background"></div>
+                                        </div>
+                                        <!-- /.ribbon -->
+
+                                    </div>
+                        <%
+                                    }else{
+                                        if(producto.isOferta()){
+                        %>
+                                        <div class="col-sm-6">
+                                            <div id="mainImage">
+                                                <img src="img/detailbig1.jpg" alt="" class="img-responsive">
+                                            </div>
+
+                                            <div class="ribbon sale">
+                                                <div class="theribbon"> <b>-</b><%= producto.getPorcentajeoferta() %>%</div>
+                                                <div class="ribbon-background"></div>
+                                            </div>
+                                            <!-- /.ribbon -->
+                                        </div>
+                        <%
+                                        }else{
+                        %>
+                                        <div class="col-sm-6">
+                                            <div id="mainImage">
+                                                <img src="img/detailbig1.jpg" alt="" class="img-responsive">
+                                            </div>
+                                        </div>
+                        <%
+                                        }
+                                    }
+                                }
+                        %>                        
                         <div class="col-sm-6">
                             <div class="box">
                                 <h1 class="text-center"><%= producto.getNombre() %></h1>
                                 <p class="goToDescription"><a href="#details" class="scroll-to">Scroll to product details, material & care and sizing</a>
                                 </p>
-                                <p class="price">S/.<%= producto.getPrecio() %></p>
+                                <%
+                                    if(producto.isOferta()){
+                                %>
+                                    <p class="price"><del>S/.<%= String.format("%.2f", producto.getPrecio())%> </del> S/.<%= String.format("%.2f",producto.calcularNuevoPrecio()) %></p>
+                                <%
+                                    }else{
+                                %>
+                                    <p class="price">S/.<%= String.format("%.2f",producto.getPrecio()) %></p>
+                                <%
+                                    }
+                                %>
 
                                 <p class="text-center buttons">
                                     <a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a> 
                                     <a href="basket.html" class="btn btn-default"><i class="fa fa-heart"></i> Add to wishlist</a>
                                 </p>
-
-
                             </div>
 
                             <div class="row" id="thumbs">

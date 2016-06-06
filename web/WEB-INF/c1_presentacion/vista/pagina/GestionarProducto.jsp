@@ -33,7 +33,9 @@
 
 
 </head>
-
+<%
+    List<Producto> productos = (List<Producto>)request.getAttribute("productos");
+%>
 <body>
     <!-- *** TOPBAR ***
  _________________________________________________________ -->
@@ -266,48 +268,188 @@
                     </div>
 
                     <div class="row products">
-<%
-                    List<Producto> productos = (List<Producto>)request.getAttribute("productos");
+<%                    
                     for(Producto producto : productos){
-                        if(producto.isActivo()){                    
-                            for(Imagen imagen : producto.getImagenes()){
-                                if(imagen.isPrincipal()){
-%>
-                                <div class="col-md-4 col-sm-6">
-                                    <div class="product">
-                                        <div class="flip-container">
-                                            <div class="flipper">
-                                                <div class="front">
-                                                    <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>">
-                                                        <img src="<%= imagen.getImagen()%>" alt="" class="img-responsive">
-                                                    </a>
-                                                </div>
-                                                <div class="back">
-                                                    <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>">
-                                                        <img src="<%= imagen.getImagen() %>" alt="" class="img-responsive">
-                                                    </a>
+                        if(producto.isActivo()){
+                            if(producto.isNuevo() && producto.isOferta()){
+                                for(Imagen imagen : producto.getImagenes()){
+                                    if(imagen.isPrincipal()){
+    %>
+                                    <div class="col-md-4 col-sm-6">
+                                        <div class="product">
+                                            <div class="flip-container">
+                                                <div class="flipper">
+                                                    <div class="front">
+                                                        <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>">
+                                                            <img src="<%= imagen.getImagen()%>" alt="" class="img-responsive">
+                                                        </a>
+                                                    </div>
+                                                    <div class="back">
+                                                        <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>">
+                                                            <img src="<%= imagen.getImagen() %>" alt="" class="img-responsive">
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>" class="invisible">
+                                                <img src="<%= imagen.getImagen() %>" alt="" class="img-responsive">
+                                            </a>
+                                            <div class="text">
+                                                <h3><a href="DetalleProducto?codigo=<%= producto.getCodigo() %>"><%= producto.getNombre() %></a></h3>
+                                                <p class="price"><del>S/.<%= String.format("%.2f", producto.getPrecio())%> </del> S/.<%= String.format("%.2f",producto.calcularNuevoPrecio()) %></p>
+                                                <p class="buttons">
+                                                    <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>" class="btn btn-default">View detail</a>
+                                                    <a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                </p>
+                                            </div>
+                                            
+                                            <div class="ribbon new">
+                                                <div class="theribbon">NEW</div>
+                                                <div class="ribbon-background"></div>
+                                            </div>
+                                                    
+                                            <div class="ribbon sale">
+                                                <div class="theribbon"> <b>-</b><%= producto.getPorcentajeoferta() %>%</div>
+                                                <div class="ribbon-background"></div>
+                                            </div>
+                                            <!-- /.text -->
                                         </div>
-                                        <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>" class="invisible">
-                                            <img src="<%= imagen.getImagen() %>" alt="" class="img-responsive">
-                                        </a>
-                                        <div class="text">
-                                            <h3><a href="DetalleProducto?codigo=<%= producto.getCodigo() %>"><%= producto.getNombre() %></a></h3>
-                                            <p class="price"><%= producto.getPrecio() %></p>
-                                            <p class="buttons">
-                                                <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>" class="btn btn-default">View detail</a>
-                                                <a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                            </p>
-                                        </div>
-                                        <!-- /.text -->
+                                        <!-- /.product -->
                                     </div>
-                                    <!-- /.product -->
-                                </div>
-<%                      
+    <%                      
+                                    }
                                 }
-                            }
-                        }        
+                            }else{
+                                if(producto.isNuevo()){
+                                    for(Imagen imagen : producto.getImagenes()){
+                                        if(imagen.isPrincipal()){
+%>
+                                        <div class="col-md-4 col-sm-6">
+                                            <div class="product">
+                                                <div class="flip-container">
+                                                    <div class="flipper">
+                                                        <div class="front">
+                                                            <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>">
+                                                                <img src="<%= imagen.getImagen()%>" alt="" class="img-responsive">
+                                                            </a>
+                                                        </div>
+                                                        <div class="back">
+                                                            <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>">
+                                                                <img src="<%= imagen.getImagen() %>" alt="" class="img-responsive">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>" class="invisible">
+                                                    <img src="<%= imagen.getImagen() %>" alt="" class="img-responsive">
+                                                </a>
+                                                <div class="text">
+                                                    <h3><a href="DetalleProducto?codigo=<%= producto.getCodigo() %>"><%= producto.getNombre() %></a></h3>
+                                                    <p class="price">S/.<%= String.format("%.2f",producto.getPrecio()) %></p>
+                                                    <p class="buttons">
+                                                        <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>" class="btn btn-default">View detail</a>
+                                                        <a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                    </p>
+                                                </div>
+                                                        
+                                                <div class="ribbon new">
+                                                    <div class="theribbon">NEW</div>
+                                                    <div class="ribbon-background"></div>
+                                                </div>
+                                                <!-- /.text -->
+                                            </div>
+                                            <!-- /.product -->
+                                        </div>
+<%
+                                        }
+                                    }
+                                }else{
+                                    if(producto.isOferta()){
+                                        for(Imagen imagen : producto.getImagenes()){
+                                            if(imagen.isPrincipal()){
+%>
+                                        <div class="col-md-4 col-sm-6">
+                                            <div class="product">
+                                                <div class="flip-container">
+                                                    <div class="flipper">
+                                                        <div class="front">
+                                                            <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>">
+                                                                <img src="<%= imagen.getImagen()%>" alt="" class="img-responsive">
+                                                            </a>
+                                                        </div>
+                                                        <div class="back">
+                                                            <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>">
+                                                                <img src="<%= imagen.getImagen() %>" alt="" class="img-responsive">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>" class="invisible">
+                                                    <img src="<%= imagen.getImagen() %>" alt="" class="img-responsive">
+                                                </a>
+                                                <div class="text">
+                                                    <h3><a href="DetalleProducto?codigo=<%= producto.getCodigo() %>"><%= producto.getNombre() %></a></h3>
+                                                    <p class="price"><del>S/.<%= String.format("%.2f", producto.getPrecio())%> </del> S/.<%= String.format("%.2f",producto.calcularNuevoPrecio()) %></p>
+                                                    <p class="buttons">
+                                                        <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>" class="btn btn-default">View detail</a>
+                                                        <a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                    </p>
+                                                </div>
+                                                        
+                                                <div class="ribbon sale">
+                                                    <div class="theribbon"> <b>-</b><%= producto.getPorcentajeoferta() %>%</div>
+                                                    <div class="ribbon-background"></div>
+                                                </div>
+                                                <!-- /.text -->
+                                            </div>
+                                            <!-- /.product -->
+                                            
+                                        </div>                                        
+<%
+                                            }
+                                        }            
+                                    }else{
+                                        for(Imagen imagen : producto.getImagenes()){
+                                            if(imagen.isPrincipal()){
+%>
+                                            <div class="col-md-4 col-sm-6">
+                                                <div class="product">
+                                                    <div class="flip-container">
+                                                        <div class="flipper">
+                                                            <div class="front">
+                                                                <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>">
+                                                                    <img src="<%= imagen.getImagen()%>" alt="" class="img-responsive">
+                                                                </a>
+                                                            </div>
+                                                            <div class="back">
+                                                                <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>">
+                                                                    <img src="<%= imagen.getImagen() %>" alt="" class="img-responsive">
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>" class="invisible">
+                                                        <img src="<%= imagen.getImagen() %>" alt="" class="img-responsive">
+                                                    </a>
+                                                    <div class="text">
+                                                        <h3><a href="DetalleProducto?codigo=<%= producto.getCodigo() %>"><%= producto.getNombre() %></a></h3>
+                                                        <p class="price"><%= producto.getPrecio() %></p>
+                                                        <p class="buttons">
+                                                            <a href="DetalleProducto?codigo=<%= producto.getCodigo() %>" class="btn btn-default">View detail</a>
+                                                            <a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                        </p>
+                                                    </div>
+                                                    <!-- /.text -->
+                                                </div>
+                                                <!-- /.product -->
+                                            </div>   
+<%
+                                            }
+                                        }
+                                    }
+                                }
+                            }        
+                        }
                     }
 %>
                         
